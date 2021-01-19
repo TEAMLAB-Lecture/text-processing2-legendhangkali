@@ -1,6 +1,31 @@
 #######################
 # Test Processing II  #
 #######################
+import re
+
+def transform_string(string_input):
+    d_string = ""
+    for i in string_input:
+        if i.isdigit():
+            d_string += i
+
+    return d_string
+
+
+def convert_eng(string_input):
+    dic_alpha = {'0':'zero','1':'one','2':'two','3':'three','4':'four','5':'five','6':'six','7':'seven','8':'eight','9':'nine'}
+    max_len = (len(string_input))
+    conv_e = ""
+
+    for c in range(max_len):
+        if c == max_len - 1:
+            conv_e += dic_alpha[string_input[c]]
+
+        else:
+            conv_e += dic_alpha[string_input[c]]
+            conv_e += " "
+
+    return conv_e
 
 
 def digits_to_words(input_string):
@@ -28,14 +53,20 @@ def digits_to_words(input_string):
             >>> tp2.digits_to_words(digits_str2)
             'three one four one five'
     """
-    digit_string = None
+    transf_string = transform_string(input_string)
+
+    if len(transf_string) == 0:
+        digit_string = ""
+    else:
+        digit_string = convert_eng(transf_string)
+
     return digit_string
 
 
 """
-컴퓨터 프로그래밍에 많은 명명 규칙이 있지만, 두 규칙이 특히 흔히 쓰입니다. 
+컴퓨터 프로그래밍에 많은 명명 규칙이 있지만, 두 규칙이 특히 흔히 쓰입니다.
 첫번째로는, 변수 이름을 'underscore'로 나눠준다거나, (ex. under_score_variable)
-두번째로는, 변수 이름을 대소문자 구별해 구분자 (delimiter)없이 쓰는 경우가 있습니다. 
+두번째로는, 변수 이름을 대소문자 구별해 구분자 (delimiter)없이 쓰는 경우가 있습니다.
 이 두번째의 경우에는 첫번째 단어는 소문자로, 그 후에 오는 단어들의 첫번째 글자들은 대문자로 쓰입니다 (ex. camelCaseVariable). 
 """
 
@@ -43,7 +74,7 @@ def digits_to_words(input_string):
 def to_camel_case(underscore_str):
     """
     이 문제에서 첫번째 규칙 'underscore variable' 에서 두번째 규칙 'camelcase variable'으로 변환함
-    * 앞과 뒤에 여러개의 'underscore'는 무시해도 된
+    * 앞과 뒤에 여러개의 'underscore'는 무시해도 됨
     * 만약 어떤 변수 이름이 underscore로만 이루어 진다면, 빈 문자열만 반환해도 됨
 
         Parameters:
@@ -64,5 +95,18 @@ def to_camel_case(underscore_str):
             >>> tp2.to_camel_case(underscore_str3)
             "alreadyCamel"
     """
-    camelcase_str = None
+    if '_' not in underscore_str:
+        camelcase_str = underscore_str
+
+    else:
+        del_underscore = re.sub('_', ' ', underscore_str)
+        split_str = del_underscore.lower().split()
+        complete_str = ""
+        complete_str += split_str[0]
+
+        for i in range(1, len(split_str)):
+            complete_str += split_str[i].capitalize()
+        
+        camelcase_str = complete_str
+
     return camelcase_str
