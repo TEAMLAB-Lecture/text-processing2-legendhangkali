@@ -101,12 +101,12 @@ def to_camel_case(underscore_str):
 
     else:
         del_underscore = re.sub('_', ' ', underscore_str)
+        split_str = del_underscore.lower().split()
 
-        if not del_underscore:
+        if not split_str:
             camelcase_str = ""
 
         else:
-            split_str = del_underscore.lower().split()
             complete_str = ""
             complete_str += split_str[0]
 
